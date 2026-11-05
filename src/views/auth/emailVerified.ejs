@@ -1,0 +1,42 @@
+
+<%- include("../common/header", { title: "Email Verified" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card shadow text-center p-5">
+
+                <div class="mb-3">
+                    <span class="text-success" style="font-size: 65px;">
+                        &#10004;
+                    </span>
+                </div>
+
+                <h2 class="text-success mb-3">
+                    Email Verified Successfully!
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Your email address has been verified.
+                    You can now log in to your Movie Ticket Booking account
+                    and book your favourite movies.
+                </p>
+
+                <a href="/auth/login" class="btn btn-primary">
+                    Continue to Login
+                </a>
+
+                <a href="/movies" class="btn btn-outline-secondary mt-2">
+                    Explore Movies
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../common/footer") %>

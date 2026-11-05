@@ -1,0 +1,103 @@
+<%- include("../common/header", { title: "Edit Theater" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container-fluid mt-4 mb-5">
+    <div class="row">
+
+        <!-- Admin Sidebar -->
+        <div class="col-md-3 col-lg-2 mb-4">
+            <%- include("../common/sidebar") %>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10">
+
+            <h2 class="mb-4">Edit Theater</h2>
+
+            <% if (typeof errorMessage !== "undefined" && errorMessage.length) { %>
+                <div class="alert alert-danger">
+                    <%= errorMessage[0] %>
+                </div>
+            <% } %>
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Update Theater Details</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <form
+                        action="/theaters/update/<%= theater._id %>"
+                        method="POST"
+                    >
+
+                        <div class="mb-3">
+                            <label class="form-label">Theater Name</label>
+
+                            <input
+                                type="text"
+                                name="name"
+                                class="form-control"
+                                value="<%= theater.name %>"
+                                placeholder="Enter theater name"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                class="form-control"
+                                value="<%= theater.location %>"
+                                placeholder="Enter theater location"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Number of Screens</label>
+
+                            <input
+                                type="number"
+                                name="numberOfScreens"
+                                class="form-control"
+                                min="1"
+                                value="<%= theater.numberOfScreens %>"
+                                required
+                            >
+                        </div>
+
+                        <div class="d-flex gap-2">
+
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                            >
+                                Update Theater
+                            </button>
+
+                            <a
+                                href="/theaters/admin/manage"
+                                class="btn btn-secondary"
+                            >
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../common/footer") %>

@@ -1,0 +1,112 @@
+
+<%- include("../common/header", { title: "My Profile" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+
+            <div class="card shadow p-4">
+
+                <h2 class="text-center mb-4">My Profile</h2>
+
+                <% if (typeof errorMessage !== "undefined" && errorMessage.length) { %>
+                    <div class="alert alert-danger">
+                        <%= errorMessage[0] %>
+                    </div>
+                <% } %>
+
+                <% if (typeof successMessage !== "undefined" && successMessage.length) { %>
+                    <div class="alert alert-success">
+                        <%= successMessage[0] %>
+                    </div>
+                <% } %>
+
+                <div class="text-center mb-4">
+                    <img
+                        src="/<%= userDetails.profilePicture %>"
+                        alt="Profile Picture"
+                        class="rounded-circle border"
+                        width="120"
+                        height="120"
+                        style="object-fit: cover;"
+                    >
+                </div>
+
+                <form
+                    action="/user/profile/update"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            value="<%= userDetails.name %>"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            value="<%= userDetails.email %>"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            New Password
+                        </label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Leave blank to keep current password"
+                            minlength="6"
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="profilePicture" class="form-label">
+                            Change Profile Picture
+                        </label>
+                        <input
+                            type="file"
+                            class="form-control"
+                            id="profilePicture"
+                            name="profilePicture"
+                            accept="image/png,image/jpeg,image/webp"
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Update Profile
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-3">
+                    <a href="/bookings/history">
+                        View My Booking History
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../common/footer") %>

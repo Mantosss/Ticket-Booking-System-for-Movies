@@ -1,0 +1,136 @@
+
+<%- include("../common/header", { title: "Booking Details" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">Booking Details</h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <% if (booking) { %>
+
+                        <div class="text-center mb-4">
+                            <h3>
+                                <%= booking.movie ? booking.movie.name : "Movie Not Available" %>
+                            </h3>
+
+                            <% if (booking.status === "Confirmed") { %>
+                                <span class="badge bg-success fs-6">
+                                    Confirmed
+                                </span>
+                            <% } else { %>
+                                <span class="badge bg-danger fs-6">
+                                    Cancelled
+                                </span>
+                            <% } %>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mb-3">
+                            <div class="col-6 text-muted">Booking ID</div>
+                            <div class="col-6 text-end">
+                                <%= booking._id %>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6 text-muted">Customer</div>
+                            <div class="col-6 text-end">
+                                <%= booking.user ? booking.user.name : "N/A" %>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6 text-muted">Theater</div>
+                            <div class="col-6 text-end">
+                                <%= booking.theater ? booking.theater.name : "N/A" %>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6 text-muted">Theater Location</div>
+                            <div class="col-6 text-end">
+                                <%= booking.theater ? booking.theater.location : "N/A" %>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6 text-muted">Screen Number</div>
+                            <div class="col-6 text-end">
+                                <%= booking.show ? booking.show.screenNumber : "N/A" %>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6 text-muted">Show Date & Time</div>
+                            <div class="col-6 text-end">
+                                <%= booking.show
+                                    ? new Date(booking.show.showDateTime).toLocaleString()
+                                    : "N/A" %>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6 text-muted">Number of Tickets</div>
+                            <div class="col-6 text-end">
+                                <%= booking.ticketCount %>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6 text-muted">Booking Date</div>
+                            <div class="col-6 text-end">
+                                <%= new Date(booking.bookingDate).toLocaleString() %>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="/bookings/history" class="btn btn-secondary">
+                                Back to History
+                            </a>
+
+                            <% if (booking.status === "Confirmed") { %>
+                                <form
+                                    action="/bookings/cancel/<%= booking._id %>"
+                                    method="POST"
+                                    onsubmit="return confirm('Are you sure you want to cancel this booking?');"
+                                >
+                                    <button type="submit" class="btn btn-danger">
+                                        Cancel Booking
+                                    </button>
+                                </form>
+                            <% } %>
+                        </div>
+
+                    <% } else { %>
+
+                        <div class="text-center">
+                            <h4>Booking Not Found</h4>
+                            <a href="/bookings/history" class="btn btn-primary mt-3">
+                                Back to Booking History
+                            </a>
+                        </div>
+
+                    <% } %>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<%- include("../common/footer") %>

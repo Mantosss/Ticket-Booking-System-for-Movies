@@ -1,0 +1,184 @@
+<%- include("../common/header", { title: "Manage Theaters" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container-fluid mt-4 mb-5">
+    <div class="row">
+
+        <!-- Admin Sidebar -->
+        <div class="col-md-3 col-lg-2 mb-4">
+            <%- include("../common/sidebar") %>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10">
+
+            <h2 class="mb-4">Manage Theaters</h2>
+
+            <% if (typeof successMessage !== "undefined" && successMessage.length) { %>
+                <div class="alert alert-success alert-dismissible fade show">
+                    <%= successMessage[0] %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <% if (typeof errorMessage !== "undefined" && errorMessage.length) { %>
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <%= errorMessage[0] %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <!-- Add Theater Form -->
+            <div class="card shadow-sm mb-5">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Add New Theater</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <form action="/theaters/add" method="POST">
+
+                        <div class="row">
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Theater Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control"
+                                    placeholder="Enter theater name"
+                                    required
+                                >
+                            </div>
+
+                            <div class="col-md-5 mb-3">
+                                <label class="form-label">Location</label>
+                                <input
+                                    type="text"
+                                    name="location"
+                                    class="form-control"
+                                    placeholder="Enter theater location"
+                                    required
+                                >
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Number of Screens</label>
+                                <input
+                                    type="number"
+                                    name="numberOfScreens"
+                                    class="form-control"
+                                    min="1"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            Add Theater
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Theater List -->
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+                    <h5 class="mb-0">All Theaters</h5>
+                </div>
+
+                <div class="card-body table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Theater Name</th>
+                                <th>Location</th>
+                                <th>Number of Screens</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <% if (theaters && theaters.length > 0) { %>
+
+                                <% theaters.forEach((theater, index) => { %>
+
+                                    <tr>
+                                        <td><%= index + 1 %></td>
+
+                                        <td><%= theater.name %></td>
+
+                                        <td><%= theater.location %></td>
+
+                                        <td><%= theater.numberOfScreens %></td>
+
+                                        <td>
+
+                                            <!-- Edit Theater -->
+                                            <a
+                                                href="/theaters/edit/<%= theater._id %>"
+                                                class="btn btn-sm btn-warning mb-1"
+                                            >
+                                                Edit
+                                            </a>
+
+                                            <!-- Delete Theater -->
+                                            <form
+                                                action="/theaters/delete/<%= theater._id %>"
+                                                method="POST"
+                                                class="d-inline"
+                                                onsubmit="return confirm('Are you sure you want to delete this theater?');"
+                                            >
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm btn-danger mb-1"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </form>
+
+                                            <!-- View Shows -->
+                                            <a
+                                                href="/theaters/<%= theater._id %>/shows"
+                                                class="btn btn-sm btn-info mb-1"
+                                            >
+                                                View Shows
+                                            </a>
+
+                                        </td>
+                                    </tr>
+
+                                <% }) %>
+
+                            <% } else { %>
+
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        No theaters found.
+                                    </td>
+                                </tr>
+
+                            <% } %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../common/footer") %>

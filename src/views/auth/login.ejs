@@ -1,0 +1,114 @@
+
+<%- include("../common/header", { title: "Login | Movie Ticket Booking System" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+
+                    <h2 class="text-center mb-2">
+                        Welcome Back!
+                    </h2>
+
+                    <p class="text-center text-muted mb-4">
+                        Login to your Movie Ticket Booking account
+                    </p>
+
+                    <!-- Error Messages -->
+                    <% if (typeof error !== "undefined" && error) { %>
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <%= error %>
+                            <button type="button" class="btn-close"
+                                data-bs-dismiss="alert"></button>
+                        </div>
+                    <% } %>
+
+                    <% if (typeof errorMessage !== "undefined" && errorMessage.length > 0) { %>
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <%= errorMessage[0] %>
+                            <button type="button" class="btn-close"
+                                data-bs-dismiss="alert"></button>
+                        </div>
+                    <% } %>
+
+                    <!-- Success Messages -->
+                    <% if (typeof success !== "undefined" && success) { %>
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <%= success %>
+                            <button type="button" class="btn-close"
+                                data-bs-dismiss="alert"></button>
+                        </div>
+                    <% } %>
+
+                    <% if (typeof successMessage !== "undefined" && successMessage.length > 0) { %>
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <%= successMessage[0] %>
+                            <button type="button" class="btn-close"
+                                data-bs-dismiss="alert"></button>
+                        </div>
+                    <% } %>
+
+                    <!-- Login Form -->
+                    <form action="/auth/login" method="POST">
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                required
+                            >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                Login
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <hr class="my-4">
+
+                    <p class="text-center mb-0">
+                        Don't have an account?
+                        <a href="/auth/signup" class="text-decoration-none">
+                            Create Account
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../common/footer") %>

@@ -1,0 +1,318 @@
+
+<%- include("../common/header", { title: "Booking Reports" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container-fluid mt-4 mb-5">
+    <div class="row">
+
+        <!-- Admin Sidebar -->
+        <div class="col-md-3 col-lg-2 mb-4">
+            <%- include("../common/sidebar") %>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10">
+
+            <h2 class="mb-4">Booking Reports</h2>
+
+            <!-- Success Message -->
+            <% if (typeof successMessage !== "undefined" && successMessage.length) { %>
+                <div class="alert alert-success alert-dismissible fade show">
+                    <%= successMessage[0] %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <!-- Error Message -->
+            <% if (typeof errorMessage !== "undefined" && errorMessage.length) { %>
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <%= errorMessage[0] %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+
+            <!-- Report Navigation -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h5 class="mb-3">Select Report</h5>
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <a href="/reports"
+                           class="btn <%= reportType === 'dashboard' ? 'btn-primary' : 'btn-outline-primary' %>">
+                            Overview
+                        </a>
+
+                        <a href="/reports/movies"
+                           class="btn <%= reportType === 'movie' ? 'btn-primary' : 'btn-outline-primary' %>">
+                            Movie Reports
+                        </a>
+
+                        <a href="/reports/theaters"
+                           class="btn <%= reportType === 'theater' ? 'btn-primary' : 'btn-outline-primary' %>">
+                            Theater Reports
+                        </a>
+
+                        <a href="/reports/shows"
+                           class="btn <%= reportType === 'show' ? 'btn-primary' : 'btn-outline-primary' %>">
+                            Show Reports
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Booking Summary -->
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Booking Summary</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 h-100">
+                                <p class="text-muted mb-1">Total Bookings</p>
+                                <h3><%= typeof totalBookings !== "undefined" ? totalBookings : 0 %></h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 h-100">
+                                <p class="text-muted mb-1">Confirmed Bookings</p>
+                                <h3 class="text-success"><%= typeof confirmedBookings !== "undefined" ? confirmedBookings : 0 %></h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 h-100">
+                                <p class="text-muted mb-1">Cancelled Bookings</p>
+                                <h3 class="text-danger"><%= typeof cancelledBookings !== "undefined" ? cancelledBookings : 0 %></h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 h-100">
+                                <p class="text-muted mb-1">Total Tickets Sold</p>
+                                <h3><%= typeof totalTickets !== "undefined" ? totalTickets : 0 %></h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 h-100">
+                                <p class="text-muted mb-1">Total Movies</p>
+                                <h3><%= typeof totalMovies !== "undefined" ? totalMovies : 0 %></h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="border rounded p-3 h-100">
+                                <p class="text-muted mb-1">Total Theaters</p>
+                                <h3><%= typeof totalTheaters !== "undefined" ? totalTheaters : 0 %></h3>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Movie Booking Report -->
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Tickets Booked by Movie</h5>
+                </div>
+
+                <div class="card-body table-responsive">
+
+                    <table class="table table-bordered table-hover">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Movie</th>
+                                <th>Total Bookings</th>
+                                <th>Total Tickets</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <% if (typeof movieReports !== "undefined" && movieReports.length > 0) { %>
+
+                                <% movieReports.forEach(item => { %>
+                                    <tr>
+                                        <td><%= item.movieName || "N/A" %></td>
+                                        <td><%= item.totalBookings || 0 %></td>
+                                        <td><%= item.totalTickets || 0 %></td>
+                                    </tr>
+                                <% }) %>
+
+                            <% } else { %>
+
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">
+                                        No movie booking data available.
+                                    </td>
+                                </tr>
+
+                            <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Theater Booking Report -->
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Bookings by Theater</h5>
+                </div>
+
+                <div class="card-body table-responsive">
+
+                    <table class="table table-bordered table-hover">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Theater</th>
+                                <th>Location</th>
+                                <th>Total Bookings</th>
+                                <th>Total Tickets</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <% if (typeof theaterReports !== "undefined" && theaterReports.length > 0) { %>
+
+                                <% theaterReports.forEach(item => { %>
+                                    <tr>
+                                        <td><%= item.theaterName || "N/A" %></td>
+                                        <td><%= item.location || "N/A" %></td>
+                                        <td><%= item.totalBookings || 0 %></td>
+                                        <td><%= item.totalTickets || 0 %></td>
+                                    </tr>
+                                <% }) %>
+
+                            <% } else { %>
+
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">
+                                        No theater booking data available.
+                                    </td>
+                                </tr>
+
+                            <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Show Booking Report -->
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Bookings by Show</h5>
+                </div>
+
+                <div class="card-body table-responsive">
+
+                    <table class="table table-bordered table-hover">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Movie</th>
+                                <th>Theater</th>
+                                <th>Screen</th>
+                                <th>Show Date & Time</th>
+                                <th>Total Bookings</th>
+                                <th>Total Tickets</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <% if (typeof showReports !== "undefined" && showReports.length > 0) { %>
+
+                                <% showReports.forEach(item => { %>
+                                    <tr>
+                                        <td><%= item.movieName || "N/A" %></td>
+                                        <td><%= item.theaterName || "N/A" %></td>
+                                        <td><%= item.screenNumber || "N/A" %></td>
+                                        <td>
+                                            <%= item.showDateTime
+                                                ? new Date(item.showDateTime).toLocaleString("en-IN")
+                                                : "N/A" %>
+                                        </td>
+                                        <td><%= item.totalBookings || 0 %></td>
+                                        <td><%= item.totalTickets || 0 %></td>
+                                    </tr>
+                                <% }) %>
+
+                            <% } else { %>
+
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">
+                                        No show booking data available.
+                                    </td>
+                                </tr>
+
+                            <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Email Booking Summary -->
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Email Booking Summary</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <form action="/reports/email-summary" method="POST">
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Recipient Email
+                            </label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter recipient email"
+                                required
+                            >
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            Send Booking Summary
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../common/footer") %>

@@ -1,0 +1,123 @@
+
+<%- include("../common/header", { title: "All Bookings" }) %>
+<%- include("../common/navbar") %>
+
+<div class="container mt-4 mb-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>All Bookings</h2>
+            <p class="text-muted">Manage and view customer bookings.</p>
+        </div>
+
+        <a href="/reports" class="btn btn-outline-primary">
+            View Reports
+        </a>
+    </div>
+
+    <% if (successMessage) { %>
+        <div class="alert alert-success">
+            <%= successMessage %>
+        </div>
+    <% } %>
+
+    <% if (errorMessage) { %>
+        <div class="alert alert-danger">
+            <%= errorMessage %>
+        </div>
+    <% } %>
+
+    <% if (bookings && bookings.length > 0) { %>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Movie</th>
+                        <th>Theater</th>
+                        <th>Screen</th>
+                        <th>Show Date</th>
+                        <th>Tickets</th>
+                        <th>Booking Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <% bookings.forEach((booking, index) => { %>
+
+                        <tr>
+                            <td><%= index + 1 %></td>
+
+                            <td>
+                                <%= booking.user?.name || "N/A" %>
+                            </td>
+
+                            <td>
+                                <%= booking.user?.email || "N/A" %>
+                            </td>
+
+                            <td>
+                                <%= booking.movie?.name || "N/A" %>
+                            </td>
+
+                            <td>
+                                <%= booking.theater?.name || "N/A" %>
+                            </td>
+
+                            <td>
+                                <%= booking.show?.screenNumber || "N/A" %>
+                            </td>
+
+                            <td>
+                                <%= booking.show?.showDateTime
+                                    ? new Date(booking.show.showDateTime).toLocaleString("en-IN")
+                                    : "N/A" %>
+                            </td>
+
+                            <td>
+                                <%= booking.ticketCount %>
+                            </td>
+
+                            <td>
+                                <%= booking.bookingDate
+                                    ? new Date(booking.bookingDate).toLocaleString("en-IN")
+                                    : "N/A" %>
+                            </td>
+
+                            <td>
+                                <% if (booking.status === "Confirmed") { %>
+                                    <span class="badge bg-success">Confirmed</span>
+                                <% } else if (booking.status === "Cancelled") { %>
+                                    <span class="badge bg-danger">Cancelled</span>
+                                <% } else { %>
+                                    <span class="badge bg-secondary">
+                                        <%= booking.status %>
+                                    </span>
+                                <% } %>
+                            </td>
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    <% } else { %>
+
+        <div class="alert alert-info">
+            No bookings found.
+        </div>
+
+    <% } %>
+
+</div>
+
+<%- include("../common/footer") %>

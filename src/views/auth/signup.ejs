@@ -1,0 +1,100 @@
+
+<%- include("../common/header", { title: "Create Account" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <div class="card shadow p-4">
+
+                <h2 class="text-center mb-2">Create Account</h2>
+                <p class="text-center text-muted mb-4">
+                    Register to book your favourite movies.
+                </p>
+
+                <% if (typeof errorMessage !== "undefined" && errorMessage.length) { %>
+                    <div class="alert alert-danger">
+                        <%= errorMessage[0] %>
+                    </div>
+                <% } %>
+
+                <% if (typeof successMessage !== "undefined" && successMessage.length) { %>
+                    <div class="alert alert-success">
+                        <%= successMessage[0] %>
+                    </div>
+                <% } %>
+
+                <form action="/auth/signup" method="POST">
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            minlength="6"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">
+                            Confirm Password
+                        </label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirm your password"
+                            minlength="6"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Create Account
+                    </button>
+
+                </form>
+
+                <p class="text-center mt-3 mb-0">
+                    Already have an account?
+                    <a href="/auth/login">Login here</a>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../common/footer") %>

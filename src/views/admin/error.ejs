@@ -1,0 +1,47 @@
+
+<%- include("./common/header", { title: "Something Went Wrong" }) %>
+
+<%- include("./common/navbar") %>
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow-sm text-center p-4">
+
+                <div class="card-body">
+
+                    <h1 class="display-4 text-danger mb-3">
+                        <%= statusCode || 500 %>
+                    </h1>
+
+                    <h3 class="mb-3">
+                        Something Went Wrong!
+                    </h3>
+
+                    <p class="text-muted mb-4">
+                        <%= message || "An unexpected error occurred. Please try again later." %>
+                    </p>
+
+                    <a href="/movies" class="btn btn-primary">
+                        Back to Movies
+                    </a>
+
+                    <a href="javascript:history.back()"
+                       class="btn btn-outline-secondary ms-2">
+                        Go Back
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<%- include("./common/footer") %>

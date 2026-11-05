@@ -1,0 +1,173 @@
+
+<%- include("../common/header", { title: movie ? movie.name : "Movie Details" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container mt-5 mb-5">
+
+    <% if (!movie) { %>
+
+        <div class="alert alert-warning">
+            Movie not found.
+        </div>
+
+    <% } else { %>
+
+        <!-- Movie Information -->
+        <div class="row g-4">
+
+            <!-- Movie Poster -->
+            <div class="col-md-4">
+
+                <% if (movie.poster) { %>
+                    <img
+                        src="<%= movie.poster %>"
+                        alt="<%= movie.name %>"
+                        class="img-fluid rounded shadow"
+                        style="width: 100%; max-height: 500px; object-fit: cover;"
+                    >
+                <% } else { %>
+                    <div
+                        class="bg-secondary text-white rounded d-flex justify-content-center align-items-center"
+                        style="height: 400px;"
+                    >
+                        No Poster Available
+                    </div>
+                <% } %>
+
+            </div>
+
+            <!-- Movie Details -->
+            <div class="col-md-8">
+
+                <h2 class="mb-3"><%= movie.name %></h2>
+
+                <p>
+                    <strong>Genre:</strong>
+                    <%= movie.genre?.join(", ") || "N/A" %>
+                </p>
+
+                <p>
+                    <strong>Language:</strong>
+                    <%= movie.language || "N/A" %>
+                </p>
+
+                <p>
+                    <strong>Duration:</strong>
+                    <%= movie.duration || "N/A" %> minutes
+                </p>
+
+                <p>
+                    <strong>Director:</strong>
+                    <%= movie.director || "N/A" %>
+                </p>
+
+                <p>
+                    <strong>Cast:</strong>
+                    <%= movie.cast?.join(", ") || "N/A" %>
+                </p>
+
+                <p>
+                    <strong>Release Date:</strong>
+                    <%= movie.releaseDate
+                        ? new Date(movie.releaseDate).toLocaleDateString("en-IN")
+                        : "N/A" %>
+                </p>
+
+                <hr>
+
+                <h5>About the Movie</h5>
+
+                <p>
+                    <%= movie.description || "No description available." %>
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr class="my-5">
+
+        <!-- Available Shows -->
+        <h3 class="mb-4">Available Shows</h3>
+
+        <% if (!shows || shows.length === 0) { %>
+
+            <div class="alert alert-info">
+                No shows are currently available for this movie.
+            </div>
+
+        <% } else { %>
+
+            <div class="row g-3">
+
+                <% shows.forEach(show => { %>
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card shadow-sm h-100">
+
+                            <div class="card-body">
+
+                                <h5 class="card-title">
+                                    <%= show.theater?.name || "Theater" %>
+                                </h5>
+
+                                <p class="mb-2">
+                                    <strong>Location:</strong>
+                                    <%= show.theater?.location || "N/A" %>
+                                </p>
+
+                                <p class="mb-2">
+                                    <strong>Screen:</strong>
+                                    <%= show.screenNumber %>
+                                </p>
+
+                                <p class="mb-2">
+                                    <strong>Show Time:</strong>
+                                    <%= new Date(show.showDateTime).toLocaleString("en-IN") %>
+                                </p>
+
+                                <p class="mb-3">
+                                    <strong>Available Seats:</strong>
+                                    <%= show.availableSeats %>
+                                </p>
+
+                                <% if (show.availableSeats > 0 && new Date(show.showDateTime) > new Date()) { %>
+
+                                    <!-- Corrected: use show._id -->
+                                    <a
+                                        href="/bookings/select/<%= show._id %>"
+                                        class="btn btn-primary w-100"
+                                    >
+                                        Book Tickets
+                                    </a>
+
+                                <% } else { %>
+
+                                    <button
+                                        class="btn btn-secondary w-100"
+                                        disabled
+                                    >
+                                        House Full
+                                    </button>
+
+                                <% } %>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    <% } %>
+
+</div>
+
+<%- include("../common/footer") %>

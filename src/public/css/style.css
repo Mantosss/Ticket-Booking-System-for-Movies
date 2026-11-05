@@ -1,0 +1,231 @@
+
+/* ==============================
+   GLOBAL STYLES
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f6fa;
+    color: #212529;
+    min-height: 100vh;
+}
+
+/* ==============================
+   NAVBAR
+============================== */
+
+.navbar {
+    padding: 14px 20px;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffc107 !important;
+}
+
+/* ==============================
+   HEADINGS
+============================== */
+
+h2,
+h3,
+h4,
+h5 {
+    font-weight: 600;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* ==============================
+   CARDS
+============================== */
+
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    font-weight: 600;
+    padding: 15px 20px;
+}
+
+/* ==============================
+   MOVIE POSTERS
+============================== */
+
+.card-img-top {
+    width: 100%;
+    object-fit: cover;
+}
+
+.movie-poster {
+    height: 280px;
+    object-fit: cover;
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #e50914;
+    border-color: #e50914;
+}
+
+.btn-primary:hover {
+    background-color: #b80710;
+    border-color: #b80710;
+}
+
+.btn-success {
+    background-color: #198754;
+}
+
+/* ==============================
+   FORMS
+============================== */
+
+.form-control,
+.form-select {
+    padding: 10px 12px;
+    border-radius: 6px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #e50914;
+    box-shadow: 0 0 0 0.2rem rgba(229, 9, 20, 0.15);
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+/* ==============================
+   TABLES
+============================== */
+
+.table {
+    vertical-align: middle;
+}
+
+.table th {
+    white-space: nowrap;
+}
+
+.table td {
+    padding: 12px;
+}
+
+/* ==============================
+   ADMIN SIDEBAR
+============================== */
+
+.admin-sidebar {
+    background-color: #212529;
+    padding: 20px;
+    border-radius: 10px;
+    min-height: 400px;
+}
+
+.admin-sidebar a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.admin-sidebar a:hover {
+    background-color: #e50914;
+}
+
+/* ==============================
+   ALERTS
+============================== */
+
+.alert {
+    border-radius: 8px;
+}
+
+/* ==============================
+   ERROR PAGE
+============================== */
+
+.error-page {
+    min-height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==============================
+   FOOTER
+============================== */
+
+footer {
+    background-color: #212529;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+============================== */
+
+@media (max-width: 768px) {
+
+    .navbar-brand {
+        font-size: 18px;
+    }
+
+    .card-img-top,
+    .movie-poster {
+        height: 240px;
+    }
+
+    .admin-sidebar {
+        min-height: auto;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
+}

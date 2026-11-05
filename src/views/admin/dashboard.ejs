@@ -1,0 +1,126 @@
+
+<%- include("../common/header", { title: "Admin Dashboard" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container-fluid mt-4 mb-5">
+
+    <div class="row">
+
+        <!-- Admin Sidebar -->
+        <div class="col-md-3 col-lg-2 mb-4">
+            <%- include("../common/sidebar") %>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="col-md-9 col-lg-10">
+
+            <div class="mb-4">
+                <h2>Admin Dashboard</h2>
+                <p class="text-muted">
+                    Welcome to the Movie Ticket Booking System administration panel.
+                </p>
+            </div>
+
+            <!-- Dashboard Cards -->
+            <div class="row g-4">
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Movies</h5>
+                            <p class="text-muted">
+                                Add, update, and delete movies.
+                            </p>
+                            <a href="/movies/admin/manage"
+                               class="btn btn-primary">
+                                Manage Movies
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Theaters</h5>
+                            <p class="text-muted">
+                                Add, update, and delete theaters.
+                            </p>
+                            <a href="/theaters"
+                               class="btn btn-primary">
+                                Manage Theaters
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Manage Shows</h5>
+                            <p class="text-muted">
+                                Schedule movies and manage show timings.
+                            </p>
+                            <a href="/theaters/shows/add"
+                               class="btn btn-primary">
+                                Manage Shows
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">All Bookings</h5>
+                            <p class="text-muted">
+                                View all customer ticket bookings.
+                            </p>
+                            <a href="/bookings/admin/all"
+                               class="btn btn-primary">
+                                View Bookings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Reports</h5>
+                            <p class="text-muted">
+                                View movie, theater, and show reports.
+                            </p>
+                            <a href="/reports"
+                               class="btn btn-primary">
+                                View Reports
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Movie Website</h5>
+                            <p class="text-muted">
+                                Visit the public movie listing page.
+                            </p>
+                            <a href="/movies"
+                               class="btn btn-outline-primary">
+                                View Website
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<%- include("../common/footer") %>

@@ -1,0 +1,82 @@
+
+<%- include("../common/header", { title: "Book Tickets" }) %>
+<%- include("../common/navbar") %>
+
+<div class="container mt-5 mb-5">
+
+    <h2 class="mb-4">Book Movie Tickets</h2>
+
+    <% if (!show) { %>
+        <div class="alert alert-warning">
+            Show not found.
+        </div>
+    <% } else { %>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h4><%= show.movie.name %></h4>
+
+                <p>
+                    <strong>Theater:</strong>
+                    <%= show.theater.name %>
+                </p>
+
+                <p>
+                    <strong>Location:</strong>
+                    <%= show.theater.location %>
+                </p>
+
+                <p>
+                    <strong>Show Time:</strong>
+                    <%= new Date(show.showDateTime).toLocaleString() %>
+                </p>
+
+                <p>
+                    <strong>Available Seats:</strong>
+                    <%= show.availableSeats %>
+                </p>
+
+                <hr>
+
+                <form action="/bookings/book" method="POST">
+
+                    <input
+                        type="hidden"
+                        name="showId"
+                        value="<%= show._id %>"
+                    >
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Number of Tickets
+                        </label>
+
+                        <input
+                            type="number"
+                            name="ticketCount"
+                            class="form-control"
+                            min="1"
+                            max="<%= show.availableSeats %>"
+                            value="1"
+                            required
+                        >
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-success w-100"
+                    >
+                        Confirm Booking
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
+    <% } %>
+
+</div>
+
+<%- include("../common/footer") %>

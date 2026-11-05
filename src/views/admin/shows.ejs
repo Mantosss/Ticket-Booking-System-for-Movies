@@ -1,0 +1,227 @@
+
+<%- include("../common/header", { title: "Manage Shows" }) %>
+
+<%- include("../common/navbar") %>
+
+<div class="container-fluid mt-4 mb-5">
+    <div class="row">
+
+        <!-- Admin Sidebar -->
+        <div class="col-md-3 col-lg-2 mb-4">
+            <%- include("../common/sidebar") %>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10">
+
+            <h2 class="mb-4">Manage Movie Shows</h2>
+
+            <!-- Success Message -->
+            <% if (typeof successMessage !== "undefined" && successMessage.length) { %>
+                <div class="alert alert-success alert-dismissible fade show">
+                    <%= successMessage[0] %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <!-- Error Message -->
+            <% if (typeof errorMessage !== "undefined" && errorMessage.length) { %>
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <%= errorMessage[0] %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <!-- Add Show Form -->
+            <div class="card shadow-sm mb-5">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Schedule New Show</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <form action="/theaters/shows/add" method="POST">
+
+                        <div class="row">
+
+                            <!-- Select Movie -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Select Movie</label>
+
+                                <select
+                                    name="movie"
+                                    class="form-select"
+                                    required
+                                >
+                                    <option value="">Choose Movie</option>
+
+                                    <% if (movies && movies.length > 0) { %>
+                                        <% movies.forEach(movie => { %>
+                                            <option value="<%= movie._id %>">
+                                                <%= movie.name %>
+                                            </option>
+                                        <% }) %>
+                                    <% } %>
+
+                                </select>
+                            </div>
+
+                            <!-- Select Theater -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Select Theater</label>
+
+                                <select
+                                    name="theater"
+                                    class="form-select"
+                                    required
+                                >
+                                    <option value="">Choose Theater</option>
+
+                                    <% if (theaters && theaters.length > 0) { %>
+                                        <% theaters.forEach(theater => { %>
+                                            <option value="<%= theater._id %>">
+                                                <%= theater.name %> - <%= theater.location %>
+                                            </option>
+                                        <% }) %>
+                                    <% } %>
+
+                                </select>
+                            </div>
+
+                            <!-- Screen Number -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Screen Number</label>
+
+                                <input
+                                    type="number"
+                                    name="screenNumber"
+                                    class="form-control"
+                                    min="1"
+                                    step="1"
+                                    placeholder="Enter screen number"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Show Date and Time -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Show Date & Time</label>
+
+                                <input
+                                    type="datetime-local"
+                                    name="showDateTime"
+                                    class="form-control"
+                                    min="<%= new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16) %>"
+                                    required
+                                >
+                            </div>
+
+                            <!-- Total Seats -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Total Seats</label>
+
+                                <input
+                                    type="number"
+                                    name="totalSeats"
+                                    class="form-control"
+                                    min="1"
+                                    step="1"
+                                    placeholder="Enter total seats"
+                                    required
+                                >
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-calendar-plus"></i>
+                            Schedule Show
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Scheduled Shows -->
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+                    <h5 class="mb-0">Scheduled Shows</h5>
+                </div>
+
+                <div class="card-body table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Movie</th>
+                                <th>Theater</th>
+                                <th>Screen</th>
+                                <th>Date & Time</th>
+                                <th>Total Seats</th>
+                                <th>Available Seats</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <% if (shows && shows.length > 0) { %>
+
+                                <% shows.forEach((show, index) => { %>
+
+                                    <tr>
+                                        <td><%= index + 1 %></td>
+
+                                        <td>
+                                            <%= show.movie?.name || "N/A" %>
+                                        </td>
+
+                                        <td>
+                                            <%= show.theater?.name || "N/A" %>
+                                        </td>
+
+                                        <td>
+                                            <%= show.screenNumber %>
+                                        </td>
+
+                                        <td>
+                                            <%= new Date(show.showDateTime).toLocaleString() %>
+                                        </td>
+
+                                        <td>
+                                            <%= show.totalSeats %>
+                                        </td>
+
+                                        <td>
+                                            <%= show.availableSeats %>
+                                        </td>
+                                    </tr>
+
+                                <% }) %>
+
+                            <% } else { %>
+
+                                <tr>
+                                    <td colspan="7" class="text-center">
+                                        No shows scheduled yet.
+                                    </td>
+                                </tr>
+
+                            <% } %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include("../common/footer") %>
