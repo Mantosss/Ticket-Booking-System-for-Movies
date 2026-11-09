@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
-// Create email transporter
 const createTransporter = () => {
     return nodemailer.createTransport({
         host: process.env.EMAIL_HOST || "smtp.gmail.com",
@@ -19,8 +18,7 @@ const createTransporter = () => {
 };
 
 class AuthController {
-
-    // 1. Signup Page
+//sign page
     async signupPage(req, res) {
         try {
             return res.render("auth/signup");
@@ -30,7 +28,7 @@ class AuthController {
         }
     }
 
-    // 2. User Signup
+    //usersign
     async signup(req, res) {
         try {
             const { name, email, password, confirmPassword } = req.body;
@@ -55,7 +53,7 @@ class AuthController {
 
             const normalizedEmail = email.trim().toLowerCase();
 
-            // Check existing user
+            //alluser
             const existingUser = await User.findOne({
                 email: normalizedEmail
             });
@@ -66,7 +64,7 @@ class AuthController {
                 });
             }
 
-            // Find User role
+            //userbyrole
             const userRole = await Role.findOne({ name: "User" });
 
             if (!userRole) {
@@ -75,17 +73,17 @@ class AuthController {
                 });
             }
 
-            // Hash password
+            //password
             const hashedPassword = await bcrypt.hash(password, 12);
 
-            // Generate verification token
+            //verifitoken
             const verificationToken = crypto.randomBytes(32).toString("hex");
 
             const verificationTokenExpiry = new Date(
                 Date.now() + 24 * 60 * 60 * 1000
             );
 
-            // Save user in MongoDB
+            // saveuserinmongo
             const newUser = await User.create({
                 name: name.trim(),
                 email: normalizedEmail,
@@ -98,11 +96,11 @@ class AuthController {
 
             console.log("USER REGISTERED SUCCESSFULLY:", newUser.email);
 
-            // Generate verification link
+            // genverifilink
             const verificationLink =
                 `${process.env.CLIENT_URL}/auth/verify-email/${verificationToken}`;
 
-            // Send verification email
+            //verification email
             try {
                 const transporter = createTransporter();
 
@@ -139,7 +137,7 @@ class AuthController {
             } catch (emailError) {
                 console.error("Verification Email Error:", emailError);
 
-                // User is already saved in MongoDB
+                // Useralready exisit in mongodb
                 return res.status(201).render("auth/login", {
                     error: "Your account was created, but the verification email could not be sent. Please contact the administrator."
                 });
@@ -160,7 +158,7 @@ class AuthController {
         }
     }
 
-    // 3. Verify Email
+    // Verify Email
     async verifyEmail(req, res) {
         try {
             const { token } = req.params;
@@ -196,7 +194,7 @@ class AuthController {
         }
     }
 
-    // 4. Login Page
+    //login page
     async loginPage(req, res) {
         try {
             return res.render("auth/login");
@@ -206,7 +204,7 @@ class AuthController {
         }
     }
 
-    // 5. User/Admin Login
+    // User/Admin Login
     async login(req, res) {
         try {
             const { email, password } = req.body;
